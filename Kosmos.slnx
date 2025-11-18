@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="../ock/orangecarto-api/src/OC/OC.csproj" />
+  <Project Path="src/Kosmos.Api/Kosmos.Api.csproj" />
+  <Project Path="src/Kosmos.Common/Kosmos.Common.csproj" Id="164a9b03-d981-4474-b8d3-7cb87d58d98f" />
+</Solution>

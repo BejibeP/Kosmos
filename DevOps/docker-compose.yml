@@ -1,0 +1,93 @@
+services:
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2025-latest
+    container_name: dev_mssql
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+    ports:
+      - "${MSSQL_PORT}:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+
+  redis:
+    image: redis:8.2
+    container_name: dev_redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - redis-data:/data
+
+  redis-ui:
+    image: rediscommander/redis-commander:latest
+    container_name: dev_redis_ui
+    restart: unless-stopped
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+      - HTTP_USER=${REDIS_UI_USER}
+      - HTTP_PASS=${REDIS_UI_PASSWORD}
+    ports:
+      - "${REDIS_UI_PORT}:8081"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.4.5
+    container_name: dev_keycloak
+    restart: unless-stopped
+    environment:
+      KC_DB: dev-mem
+      KEYCLOAK_ADMIN: ${KEYCLOAK_USER}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_PASSWORD}
+    command: ["start-dev"]
+    ports:
+      - "${KEYCLOAK_HTTP_PORT}:8080"
+    volumes:
+      - keycloak-data:/opt/keycloak/data
+
+  rabbitmq:
+    image: rabbitmq:4.2-management
+    container_name: dev_rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBIT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBIT_PASS}
+    ports:
+      - "${RABBITMQ_AMQP_PORT}:5672"
+      - "${RABBITMQ_MANAGEMENT_PORT}:15672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+
+  vault:
+    image: hashicorp/vault:1.21
+    container_name: dev_vault
+    restart: unless-stopped
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: root
+    ports:
+      - "${VAULT_PORT}:8200"
+    volumes:
+      - vault-data:/vault/data
+    command: server -dev -dev-root-token-id=root
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: dev_mailpit
+    restart: unless-stopped
+    environment:
+      MP_SMTP_BIND_ADDR: "0.0.0.0:1025"
+      MP_UI_BIND_ADDR: "0.0.0.0:8025"
+    ports:
+      - "${MAILPIT_SMTP_PORT}:1025"
+      - "${MAILPIT_HTTP_PORT}:8025"
+    volumes:
+      - mailpit-data:/data
+
+volumes:
+  mssql-data:
+  redis-data:
+  keycloak-data:
+  rabbitmq-data:
+  vault-data:
+  mailpit-data:

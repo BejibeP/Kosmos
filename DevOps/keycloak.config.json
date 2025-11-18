@@ -1,0 +1,103 @@
+{
+  "realm": "kosmos",
+  "enabled": true,
+  "displayName": "Kosmos Project Realm",
+  "users": [
+    {
+      "username": "cecilia",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Cecilia",
+      "lastName": "Rossi",
+      "email": "cecilia@kosmos.local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Cecilia123!"
+        }
+      ],
+      "clientRoles": {
+        "kosmos-api": [ "admin" ]
+      }
+    },
+    {
+      "username": "leone",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Leone",
+      "lastName": "Bianchi",
+      "email": "leone@kosmos.local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Leone123!"
+        }
+      ],
+      "clientRoles": {
+        "kosmos-api": [ "user" ]
+      }
+    },
+    {
+      "username": "bob",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Bob",
+      "lastName": "Smith",
+      "email": "bob@kosmos.local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Bob123!"
+        }
+      ],
+      "clientRoles": {
+        "kosmos-api": [ "user" ]
+      }
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "kosmos-api",
+      "name": "Kosmos API Resource Server",
+      "description": "Resource server representing the API; roles define access scopes",
+      "enabled": true,
+      "redirectUris": [],
+      "webOrigins": [],
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": false,
+      "protocol": "openid-connect"
+    },
+    {
+      "clientId": "kosmos-web",
+      "name": "Kosmos Web Client",
+      "description": "Public web application client using PKCE flow",
+      "enabled": true,
+      "redirectUris": [ "http://localhost:5000/*" ],
+      "webOrigins": [ "http://localhost:5000" ],
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "pkceCodeChallengeMethod": "S256"
+      }
+    },
+    {
+      "clientId": "kosmos-m2m",
+      "name": "Kosmos M2M Client",
+      "description": "Machine-to-machine client using client credentials",
+      "enabled": true,
+      "redirectUris": [],
+      "webOrigins": [],
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "secret": "M2MSecret123!"
+    }
+  ]
+}
