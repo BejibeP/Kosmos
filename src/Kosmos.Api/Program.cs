@@ -1,4 +1,9 @@
+using Bejibe.Kosmos.Api.Extensions.ServiceCollection;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Add custom logging management
+builder.Logging.ConfigureLogging();
 
 // Add services to the container.
 

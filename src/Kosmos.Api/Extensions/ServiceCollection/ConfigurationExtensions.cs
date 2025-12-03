@@ -7,7 +7,7 @@ namespace Bejibe.Kosmos.Api.Extensions.ServiceCollection
 
         public static void LoadConfiguration(this IServiceCollection services, ConfigurationManager configurationManager)
         {
-            services.Configure<AppSettings>
+            //services.Configure<AppSettings>(configurationManager.GetSection());
             //var apiSettings = configurationManager.GetSection(ConfigSections.ApiSettings);
             //services.Configure<ApiSettings>(apiSettings);
 
