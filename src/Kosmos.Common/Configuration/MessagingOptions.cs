@@ -9,6 +9,8 @@ namespace Kosmos.Common.Configuration
 
     public class MessagingsOptions
     {
+        public const string SectionName = "Messaging";
+
         public Dictionary<string, MessagingOptions> Messaging { get; set; } = new();
     }
 

@@ -10,4 +10,9 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Kosmos.Domain\Kosmos.Domain.csproj" />
+    <ProjectReference Include="..\Kosmos.Dtos\Kosmos.Dtos.csproj" />
+  </ItemGroup>
+
 </Project>

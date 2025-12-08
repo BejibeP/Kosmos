@@ -1,33 +1,31 @@
 using Bejibe.Kosmos.Api.Extensions.ServiceCollection;
+using Bejibe.Kosmos.Api.Extensions.WebApplication;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add custom logging management
+// Configure Application / Load Configuration from Sources
+builder.Configuration.AddConfigurationSources();
+builder.Services.LoadConfiguration(builder.Configuration);
+
+// Configure Logging / Add custom logging management
 builder.Logging.ConfigureLogging();
 
-// Add services to the container.
+// Dependancy Injection
 
-builder.Services.AddControllers();
+// Add Infra (BDD, Mailing, etc)
+builder.Services.AddDatabase(builder.Configuration);
+
+// Add Repositories, Business Service and Controllers (the order is required)
+builder.Services.AddRepositories()
+    .AddBusinessServices()
+    .AddControllers();
+
+// Add Swagger UI / OpenAPI
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
 
 /*
 
@@ -38,32 +36,62 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace OC
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-
 #if DEBUG
             // Active les logs détaillés pour les tokens JWT
             IdentityModelEventSource.ShowPII = true;
 #endif
 
-            var builder = WebApplication.CreateBuilder(args);
-
-            // Charge les appsettings en mémoire
-            builder.Services.LoadConfiguration(builder.Configuration);
-
             // Configure l'authentification et l'authorization
             builder.Services.ConfigureAuthentication(builder.Configuration);
-
-            // Add services, controllers and containers to the container.
-            builder.Services.ConfigureDependencyInjection(builder.Configuration);
 
             // Configure Swagger/OpenAPI
             builder.Services.ConfigureSwaggerServices(builder.Configuration);
 
+        }
+    }
+}
+
+*/
+
+// Build the WebApplication
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+/*
+Seulement si on veut la vrai IP et non le proxy
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+*/
+
+app.UseHttpsRedirection();
+
+// configure it
+app.UseCors();
+
+// move ? ext ?
+app.UseHttpMethodOverride();
+
+// app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.UseRequestMetadataMiddleware();
+
+app.MapControllers();
+
+
+app.Run();
+
+/*
             var app = builder.Build();
 
             // configure swagger
@@ -81,8 +109,4 @@ namespace OC
             app.MapControllers();
 
             app.Run();
-        }
-    }
-}
-
 */

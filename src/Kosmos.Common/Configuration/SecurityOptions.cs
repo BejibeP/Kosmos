@@ -8,6 +8,8 @@ namespace Kosmos.Common.Configuration
 {
     public class SecurityOptions
     {
+        public const string SectionName = "Security";
+
         public List<string> ActiveSchemes { get; set; } = new();
         public List<BasicSecurityOptions> Basic { get; set; } = new();
         public List<ApiTokenSecurityOptions> ApiToken { get; set; } = new();

@@ -1,4 +1,8 @@
 <Solution>
   <Project Path="src/Kosmos.Api/Kosmos.Api.csproj" />
+  <Project Path="src/Kosmos.Business/Kosmos.Business.csproj" Id="ce191b06-64e5-4a28-ba2c-0004a403c5a7" />
   <Project Path="src/Kosmos.Common/Kosmos.Common.csproj" Id="164a9b03-d981-4474-b8d3-7cb87d58d98f" />
+  <Project Path="src/Kosmos.Domain/Kosmos.Domain.csproj" Id="095b3a50-cfa6-4c34-a522-31745694ce6f" />
+  <Project Path="src/Kosmos.Dtos/Kosmos.Dtos.csproj" Id="cd79393e-c60b-4645-b4e2-1fbaa1d98620" />
+  <Project Path="src/Kosmos.Models/Kosmos.Models.csproj" Id="346ef062-d0c5-4cdd-a3e6-27c10c3e9bd0" />
 </Solution>

@@ -12,15 +12,6 @@ namespace Kosmos.Api
 {
     public static class Extensions
     {
-        public static void LoadConfiguration(this IServiceCollection services, ConfigurationManager configurationManager)
-        {
-            //var apiSettings = configurationManager.GetSection(ConfigSections.ApiSettings);
-            //services.Configure<ApiSettings>(apiSettings);
-
-            //var securitySettings = configurationManager.GetSection(ConfigSections.SecuritySettings);
-            //services.Configure<SecuritySettings>(securitySettings);
-
-        }
 
         public static void ConfigureAuthentication(this IServiceCollection services, ConfigurationManager configurationManager)
         {
@@ -77,33 +68,6 @@ namespace Kosmos.Api
                 //});
 
             services.AddAuthorization();
-        }
-
-        public static void ConfigureDatabase(this IServiceCollection services, ConfigurationManager configurationManager)
-        {
-
-            // configure DatabaseContext with serviceProvider and optionBuilder
-            //services.AddDbContext<MyDbContext>((provider, options) =>
-            //{
-            //    options.UseSqlServer(configurationManager.GetConnectionString("SoccerConnectionString"));
-            //});
-        }
-
-        public static void ConfigureDependencyInjection(this IServiceCollection services, ConfigurationManager configurationManager)
-        {
-            //Dependency Injection
-
-            //services.AddScoped<IDemoService, DemoService>();
-            //services.AddScoped<IWeatherForecastService, WeatherForecastService>();
-
-            //services.AddScoped<ITechnologyRepository, TechnologyRepository>();
-            //services.AddScoped<ITechnologyService, TechnologyService>();
-
-            services.AddControllers(options =>
-            {
-                //options.Conventions.Add(new RoutePrefixConvention("api/v1"));
-            });
-            services.AddHttpContextAccessor();
         }
 
         public static void ConfigureSwaggerServices(this IServiceCollection services, ConfigurationManager configurationManager)

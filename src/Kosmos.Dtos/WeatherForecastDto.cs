@@ -1,6 +1,6 @@
-namespace Kosmos.Api
+﻿namespace Kosmos.Dtos
 {
-    public class WeatherForecast
+    public class WeatherForecastDto
     {
         public DateOnly Date { get; set; }
 

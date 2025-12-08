@@ -8,6 +8,8 @@ namespace Kosmos.Common.Configuration
 {
     public class DatabasesOptions
     {
+        public const string SectionName = "Databases";
+
         public Dictionary<string, DatabaseOptions> Databases { get; set; } = new();
     }
 

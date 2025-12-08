@@ -2,6 +2,8 @@
 {
     public class ApiOptions
     {
+        public const string SectionName = "Api";
+
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ContactName { get; set; } = string.Empty;

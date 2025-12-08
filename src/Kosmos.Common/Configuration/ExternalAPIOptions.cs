@@ -9,6 +9,8 @@ namespace Kosmos.Common.Configuration
 
     public class ExternalAPIsOptions
     {
+        public const string SectionName = "ExternalAPIs";
+
         public Dictionary<string, ExternalAPIOptions> ExternalAPIs { get; set; } = new();
     }
 

@@ -8,6 +8,8 @@ namespace Kosmos.Common.Configuration
 {
     public class MailingsOptions
     {
+        public const string SectionName = "Mailing";
+
         public Dictionary<string, MailingOptions> Mailing { get; set; } = new();
     }
 
