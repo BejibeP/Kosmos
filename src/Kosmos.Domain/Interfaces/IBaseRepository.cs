@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Bejibe.Kosmos.Domain.Data.Entities;
+using System.Linq.Expressions;
 
 namespace Bejibe.Kosmos.Domain.Interfaces
 {

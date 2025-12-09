@@ -24,6 +24,5 @@ namespace Bejibe.Kosmos.Api.Extensions.ServiceCollection
             });
 
         }
-
     }
 }

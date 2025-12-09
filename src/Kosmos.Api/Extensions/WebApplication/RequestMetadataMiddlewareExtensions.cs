@@ -1,6 +1,6 @@
 ﻿using Bejibe.Kosmos.Api.Infrastructure.Middleware;
 
-namespace Bejibe.Kosmos.Api.Extensions.WebApplication
+namespace Bejibe.Kosmos.Api.Extensions.Application
 {
     public static class RequestMetadataMiddlewareExtensions
     {
