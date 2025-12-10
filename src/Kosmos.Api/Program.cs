@@ -3,60 +3,70 @@ using Bejibe.Kosmos.Api.Extensions.ServiceCollection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure Application / Load Configuration from Sources
+// ---- Application Services Configuration ----
+
+// ---- 1. Application Configuration ----
 builder.Configuration.AddConfigurationSources();
 builder.Services.LoadConfiguration(builder.Configuration);
 
-// Configure Logging / Add custom logging management
+// ---- 2. Logging Service Configuration ----
 builder.Logging.ConfigureLogging();
 
-// Dependancy Injection
-
-// Add Infra (BDD, Mailing, etc)
+// ---- 3. Infrastructure Services ----
 builder.Services.AddDatabase(builder.Configuration);
 
-// Add Custom Authentication
+// ---- 4. Authentication and Authorization Configuration ----
 builder.Services.AddCustomAuthentication(builder.Configuration);
 
+// ---- 5. Security Configuration ----
 builder.Services.AddCorsPolicies(builder.Configuration);
 
-// Add Repositories, Business Service and Controllers (the order is required)
+// ---- 6. Application Services (Repository, Business, Controllers) ----
 builder.Services.AddRepositories()
     .AddBusinessServices()
     .AddControllers();
 
-// Add Swagger UI / OpenAPI
+// ---- 7. Swagger/OpenAPI Services ----
 builder.Services.AddSwaggerServices(builder.Configuration);
 
-// Build the WebApplication
 
+// ---- WebApplication Building and Middleware Setup ----
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-app.UseSwaggerWebUI(builder.Configuration);
+// order of middlewares
+// https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/index/_static/middleware-pipeline.svg?view=aspnetcore-6.0
 
-/*
-Seulement si on veut la vrai IP et non le proxy
-app.UseForwardedHeaders(new ForwardedHeadersOptions
-{
-    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-});
-*/
+// ---- 1. Exception Handling ----
+// app.UseExceptionHandler();
 
+// ---- 2. Security and redirection Services ----
+
+// app.UseHsts();
 app.UseHttpsRedirection();
 
-// configure it
+app.UseRouting();
+
+// configure it (precise policy)
 app.UseCors();
 
-// move ? ext ?
 app.UseHttpMethodOverride();
+
+// app.UseForwardedHeaders(); //  ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+
+// ---- 3. Authentication and Authorization ----
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
+// ---- 4. Swagger UI / Open API ---- -> move to 3 ?
+app.UseSwaggerWebUI(builder.Configuration);
+
+// ---- 5. Custom middlewares ----
 app.UseRequestMetadataMiddleware();
 
+// ---- 6. Controller Mapping ----
 app.MapControllers();
 
+// ---- 7. Booting application ----
 app.Run();
